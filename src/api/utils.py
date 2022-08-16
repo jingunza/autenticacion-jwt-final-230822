@@ -1,4 +1,5 @@
 from flask import jsonify, url_for
+from flask_jwt_extended import JWTManager
 
 class APIException(Exception):
     status_code = 400

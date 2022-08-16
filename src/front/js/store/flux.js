@@ -1,54 +1,88 @@
 const getState = ({ getStore, getActions, setStore }) => {
-	return {
-		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
-		},
-		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
+  return {
+    store: {
+      session_activity: false, // esto sirve para validar con una funcion si esta logueado (validate va en el useeffect)
+      users: [
+        {
+          email: "administrador@db.com",
+          password: 123456789,
+          token: "",
+        },
+      ],
+      input_email: "",
+      input_password: "",
+      received_token: "",
+    },
+    actions: {
+      //
+      registrar_usuario: () => {
+        const store = getStore();
+        let obj_user = {
+          email: store.input_email,
+          password: store.input_password,
+        };
+        console.log(obj_user);
+        //fetch(api, post nuew user) //guarda datos del usuario (token es solo "" por ahora) en la bd
 
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
-				}
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
+        setStore({ input_email: "" });
+        setStore({ input_password: "" });
+        console.log(store.input_email);
+        console.log(store.input_password);
+      },
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
+      iniciar_session: () => {
+        let user = {
+          email: store.input_email,
+          password: store.input_password,
+        };
+        console.log(user);
+        //fetch(api,get token COMPARANDO DATOS DE USER) //el resultado debe guardar el token en store.received_token
 
-				//reset the global store
-				setStore({ demo: demo });
-			}
-		}
-	};
+        if (store.received_token !== "") {
+          setStore({ session_activity: true });
+          setStore({ input_email: "" });
+          setStore({ input_password: "" });
+        } else {
+          alert("acceso denegado");
+        }
+        console.log(store.session_activity);
+      },
+
+      validar_actividad: () => {}, // --> validar si el usuario esta logueado cvada vez que se cargue la pagina
+
+      cerrar_session: () => {
+        setStore({ session_activity: false });
+        console.log(store.session_activity);
+        setStore({ input_email: "" });
+        setStore({ input_password: "" });
+      },
+
+      // FUNCIONES PARA EL INPUT CONTROLADO, NO MODIFICAR
+
+      actualizar_input_email: (e) => {
+        const store = getStore();
+        setStore({ input_email: e.target.value });
+        console.log(store.input_email);
+      }, // actualiza el input email con onChange
+
+      actualizar_input_password: (e) => {
+        const store = getStore();
+        setStore({ input_password: e.target.value });
+        console.log(store.input_password);
+      }, // actualiza el input password con onChange
+
+      // reset_inputs: () => {
+      //   const store = getStore();
+      //   setStore({ input_email: "" });
+      //   setStore({ input_password: "" });
+      //   console.log(store.input_email);
+      //   console.log(store.input_password);
+      // }, // resetea los inputs con onChange
+
+      // //reset the global store
+      // localStorage.setStore({ demo: demo })
+    },
+  };
 };
 
 export default getState;
