@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
+import "../../styles/signup.css";
 
 export const Signup = () => {
   const { store, actions } = useContext(Context);
@@ -38,10 +39,10 @@ export const Signup = () => {
       .catch((error) => console.error("There was an error: ", error));
   };
   return (
-    <div className="container text-center py-5">
+    <div className="contenedor_signup container-fluid text-center py-5">
       <div className="container col-12 col-md-8 col-lg-6 col-xl-4 ">
         <div className="border rounded-3 border-primary bg-light p-5">
-          <h3 className="titulo py-5">Registrese Aquí</h3>
+          <h1 className="titulo py-5">Registrese Aquí</h1>
           <div className="mb-3">
             <input
               type="text"

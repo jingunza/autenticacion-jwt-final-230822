@@ -4,6 +4,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       token: null,
       message: "",
       sessionStatus: false,
+      email: "",
+      password: "",
     },
     actions: {
       getMessage: () => {
@@ -13,8 +15,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             Authorization: "Bearer " + store.token,
           },
         };
-        // fetching data from the Backend
-        fetch(process.env.BACKEND_URL + "/api/hello", opts)
+        // fetching data from the Backend, direccion opcional: process.env.BACKEND_URL + "/api/hello"
+        fetch(
+          "https://3001-jingunza-jwtprimeravers-num7fxip0rf.ws-eu62.gitpod.io/api/hello",
+          opts
+        )
           .then((resp) => resp.json())
           .then((data) => setStore({ message: data.message }))
           .catch((error) =>
@@ -25,40 +30,16 @@ const getState = ({ getStore, getActions, setStore }) => {
       activateSession: () => {
         const store = getStore();
         setStore({ sessionStatus: true });
-        setStore({ token: sessionStorage.getItem("token") });
+        setStore({ token: localStorage.getItem("token") });
       },
 
       deactivateSession: () => {
         const store = getStore();
-        sessionStorage.removeItem("token");
+        localStorage.removeItem("token");
+        setStore({ message: "" });
         setStore({ sessionStatus: false });
         setStore({ token: null });
       },
-
-      // const getCatName = () => {
-      //   const opts = {
-      //     header: {
-      //       "Content-type": "application/json",
-      //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-      //     },
-      //   };
-      //   fetch(
-      //     "https://3001-jingunza-jwtprimeravers-num7fxip0rf.ws-eu62.gitpod.io/api/name",
-      //     opts
-      //   )
-      //     .then((resp) => {
-      //       if (resp.status !== 200) {
-      //         alert("There has been some error");
-      //       } else {
-      //         return resp.json();
-      //       }
-      //     })
-      //     .then((respAsJson) => {
-      //       cat_name = respAsJson;
-      //       console.log(cat_name);
-      //     })
-      //     .catch((error) => console.error("There was an error: ", error));
-      // };
     },
   };
 };
@@ -67,8 +48,38 @@ export default getState;
 
 // FUNCIONES NO UTILIZADAS: //////////////////////////////////////////////////////////////////////////////////////////////////
 
-//
-// loginfy: async (email, password) => {
+// const login = () => {
+//   const opts = {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       email: email,
+//       password: password,
+//     }),
+//   };
+//   fetch(
+//     "https://3001-jingunza-jwtprimeravers-num7fxip0rf.ws-eu62.gitpod.io/api/token",
+//     opts
+//   )
+//     .then((resp) => {
+//       if (resp.status !== 200) {
+//         alert("There has been some error");
+//       } else {
+//         return resp.json();
+//       }
+//     })
+//     .then((respAsJson) => {
+//       sessionStorage.setItem("token", respAsJson.access_token);
+//       console.log("this came from the backend", respAsJson);
+//       actions.activateSession();
+//       navigate("/private");
+//     })
+//     .catch((error) => console.error("There was an error: ", error));
+// };
+
+// login: async (email, password) => {
 //   const store = getStore();
 //   const opts = {
 //     // aqui se definen las opciones del fetch
@@ -154,4 +165,5 @@ export default getState;
 //   console.log(store.input_password);
 // }, // resetea los inputs con onChange
 // //reset the global store
+
 // localStorage.setStore({ demo: demo })

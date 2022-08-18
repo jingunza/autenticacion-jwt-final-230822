@@ -12,9 +12,9 @@ export const Login = () => {
 
   useEffect(() => {
     if (
-      sessionStorage.getItem("token") &&
-      sessionStorage.getItem("token") !== "" &&
-      sessionStorage.getItem("token") !== undefined
+      localStorage.getItem("token") != null &&
+      localStorage.getItem("token") !== "" &&
+      localStorage.getItem("token") !== undefined
     ) {
       actions.activateSession();
       navigate("/private");
@@ -44,24 +44,24 @@ export const Login = () => {
         }
       })
       .then((respAsJson) => {
+        localStorage.setItem("token", respAsJson.access_token);
         console.log("this came from the backend", respAsJson);
-        sessionStorage.setItem("token", respAsJson.access_token);
-        // actions.activate_session();
+        actions.activateSession();
         navigate("/private");
       })
       .catch((error) => console.error("There was an error: ", error));
   };
   return (
     <>
-      {sessionStorage.getItem("token") &&
-      sessionStorage.getItem("token") !== "" &&
-      sessionStorage.getItem("token") !== undefined ? (
+      {localStorage.getItem("token") != null && // esto sirve para cuando se entra el login habiendo ya un token
+      localStorage.getItem("token") !== "" &&
+      localStorage.getItem("token") !== undefined ? (
         navigate("/private")
       ) : (
         <div className="contenedor_login container-fluid text-center py-5">
           <div className="container col-12 col-md-8 col-lg-6 col-xl-4 ">
             <div className="formulario border rounded-3 border-primary p-5">
-              <h3 className="titulo py-5 text-success">Acceso de socios</h3>
+              <h1 className="titulo py-5 text-white">Acceso de socios</h1>
               <div>
                 <div className="py-3">
                   <input
@@ -93,13 +93,13 @@ export const Login = () => {
                 <button
                   type="button"
                   className="btn btn-primary my-3"
-                  onClick={login}
+                  onClick={login} // ------------------------------------------ esto sirve para pedir el token cuando aun no lo hay
                 >
                   Acceder
                 </button>
                 <div id="emailHelp" className="form-text py-2">
                   <Link to="/signup">
-                    <span>
+                    <span className="text-white">
                       Aún no está registrado? Haga click aquí para registrarse
                     </span>
                   </Link>

@@ -1,8 +1,12 @@
 .contenedor_login {
-  background-color: aquamarine;
+  background-image: url(https://st.depositphotos.com/1605581/3032/i/450/depositphotos_30328185-stock-photo-abstract-blue-background-business-card.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
   width: 100vw;
   height: 100vh;
 }
 .formulario {
-  background-color: rgb(29, 242, 40);
+  background-image: url(https://st.depositphotos.com/1012885/1326/i/600/depositphotos_13261958-stock-photo-large-grunge-textures-backgrounds.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }

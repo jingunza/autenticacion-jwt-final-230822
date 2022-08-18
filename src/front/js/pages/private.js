@@ -15,37 +15,32 @@ export const Private = () => {
 
   return (
     <>
-      {!sessionStorage.getItem("token") ||
-      sessionStorage.getItem("token") == "" ||
-      sessionStorage.getItem("token") == undefined ||
+      {localStorage.getItem("token") == null ||
+      localStorage.getItem("token") == "" ||
+      localStorage.getItem("token") == undefined ||
       store.sessionStatus == false ? (
         navigate("/login")
       ) : (
         <div className="container">
-          <div className="container d-flex justify-content-between p-2">
+          <div className="container d-flex justify-content-evenly p-2">
             <h5>
               Lo sentimos!, En este momento esta zona privada se encuentra en
               mantenimiento...
             </h5>
             <button
-              onClick={() =>
-                alert("El nombre de este gato es: " + store.message)
-              }
-              className="btn btn-primary"
+              onClick={() => {
+                alert("El nombre de este gato es: " + store.message);
+              }}
+              className="btn btn-success"
             >
-              Cat's Name
+              Cat's Name from JWT
             </button>
-            <Link to="/login">
-              <button
-                onClick={actions.deactivateSession}
-                className="btn btn-primary"
-              >
-                Cerrar Sesión
-              </button>
-            </Link>
           </div>
           <div className="text-center">
-            <img src="https://i.ytimg.com/vi/VkGeUKlKgx4/maxresdefault.jpg" />
+            <img
+              style={{ height: "80vh", width: "auto" }}
+              src="https://i.ytimg.com/vi/VkGeUKlKgx4/maxresdefault.jpg"
+            />
           </div>
         </div>
       )}
