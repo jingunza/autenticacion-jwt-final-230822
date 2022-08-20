@@ -32,10 +32,7 @@ export const Login = () => {
         password: password,
       }),
     };
-    fetch(
-      "https://3001-jingunza-jwtprimeravers-num7fxip0rf.ws-eu62.gitpod.io/api/token",
-      opts
-    )
+    fetch(process.env.BACKEND_URL + "/api/token", opts)
       .then((resp) => {
         if (resp.status !== 200) {
           alert("There has been some error");
