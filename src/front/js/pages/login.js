@@ -33,7 +33,8 @@ export const Login = () => {
       }),
     };
     fetch(
-      "https://3001-jingunza-jwtprimeravers-num7fxip0rf.ws-eu62.gitpod.io/api/token",
+      process.env.BACKEND_URL + "/api/token",
+      // "https://3001-jingunza-jwtprimeravers-num7fxip0rf.ws-eu62.gitpod.io/api/token",
       opts
     )
       .then((resp) => {

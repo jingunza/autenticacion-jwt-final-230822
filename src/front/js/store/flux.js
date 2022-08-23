@@ -17,7 +17,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
         // fetching data from the Backend, direccion opcional: process.env.BACKEND_URL + "/api/hello"
         fetch(
-          "https://3001-jingunza-jwtprimeravers-num7fxip0rf.ws-eu62.gitpod.io/api/hello",
+          process.env.BACKEND_URL + "/api/hello",
+          // "https://3001-jingunza-jwtprimeravers-num7fxip0rf.ws-eu62.gitpod.io/api/hello",
           opts
         )
           .then((resp) => resp.json())

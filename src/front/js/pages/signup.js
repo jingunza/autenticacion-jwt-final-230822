@@ -22,7 +22,8 @@ export const Signup = () => {
       }),
     };
     fetch(
-      "https://3001-jingunza-jwtprimeravers-num7fxip0rf.ws-eu62.gitpod.io/api/register",
+      process.env.BACKEND_URL + "/api/register",
+      // "https://3001-jingunza-jwtprimeravers-num7fxip0rf.ws-eu62.gitpod.io/api/register",
       opts
     )
       .then((resp) => {
