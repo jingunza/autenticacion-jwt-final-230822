@@ -21,8 +21,8 @@ def create_token():
     email = body_user["email"]
     password = body_user["password"]
 
-    user = User.query.filter_by(email=email, password=password).first()
-    if User is None:
+    user1 = User.query.filter_by(email=email, password=password).first()
+    if user1 is None:
         return jsonify({"msg": "Email or password is wrong"}), 401
     
     access_token = create_access_token(identity=email)
